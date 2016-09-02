@@ -23,6 +23,23 @@
     tags:
       - grafana
 
+  - name: Grafana | Patch basic settings /etc/grafana/grafana.ini
+    lineinfile: dest=/etc/grafana/grafana.ini  regexp="{{item.regexp}}" line="{{item.line}}" insertafter="{{item.insertafter | default(omit)}}"
+    with_items: "{{grafana_setup_properties | default([])}}"
+    notify: restart grafana
+    become: yes
+    tags:
+     - grafana
+
+  - name: Grafana | Patch сustom settings /etc/grafana/grafana.ini
+    lineinfile: dest=/etc/grafana/grafana.ini  regexp="{{item.regexp}}" line="{{item.line}}" insertafter="{{item.insertafter | default(omit)}}"
+    with_items: "{{grafana_properties | default([])}}"
+    notify: restart grafana
+    become: yes
+    tags:
+     - grafana
+
+
   - name: Grafana | Restart
     action: service name=grafana-server state=restarted enabled=yes
     become: yes
