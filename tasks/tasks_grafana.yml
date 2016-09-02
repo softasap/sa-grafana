@@ -1,0 +1,31 @@
+---
+  - name: Grafana | Install python-pycurl
+    apt: pkg=python-pycurl state=installed
+    become: yes
+    tags:
+      - grafana
+
+  - name: Grafana | Add GPG key to apt keyring
+    apt_key: url=https://packagecloud.io/gpg.key  state=present
+    become: yes
+    tags:
+      - grafana
+
+  - name: Grafana | Add Debian apt repository
+    apt_repository: repo="deb https://packagecloud.io/grafana/stable/debian/ wheezy main" state=present update_cache=yes
+    become: yes
+    tags:
+      - grafana
+
+  - name: Grafana | Install
+    apt: update-cache=yes pkg=grafana state=latest
+    become: yes
+    tags:
+      - grafana
+
+  - name: Grafana | Restart
+    action: service name=grafana-server state=restarted enabled=yes
+    become: yes
+    when: docker_test is not defined
+    tags:
+      - grafana

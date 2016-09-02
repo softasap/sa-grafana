@@ -1,6 +1,9 @@
 # sa-grafana
 
 
+[![Build Status](https://travis-ci.org/softasap/sa-grafana.svg?branch=master)](https://travis-ci.org/softasap/sa-grafana)
+
+
 #Installing on Debian / Ubuntu
 
 #Install Stable

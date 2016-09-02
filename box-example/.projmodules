@@ -1,0 +1,6 @@
+[submodule "roles/sa-grafana"]
+        path = roles/sa-graylog
+        url = https://github.com/softasap/sa-graylog.git
+[submodule "roles/sa-nginx"]
+        path = roles/sa-nginx
+        url = https://github.com/softasap/sa-nginx.git

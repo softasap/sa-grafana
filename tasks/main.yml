@@ -1,0 +1,3 @@
+---
+# tasks file for sa-grafana
+  - include: tasks_grafana.yml
