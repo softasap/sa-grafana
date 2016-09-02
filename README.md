@@ -4,6 +4,46 @@
 [![Build Status](https://travis-ci.org/softasap/sa-grafana.svg?branch=master)](https://travis-ci.org/softasap/sa-grafana)
 
 
+#Usage:
+
+Simple:
+
+```
+
+- {
+    role: "sa-grafana",
+    grafana_admin_user: grafana,
+    grafana_admin_password: GrAfAnA!
+
+  }
+
+
+```
+
+Advanced:
+
+```
+
+vars:
+
+  grafana_custom_properties:
+    - {regexp: "^;allow_sign_up =(.*)", line: "allow_sign_up=false"}
+
+
+roles:
+  - {
+      role: "sa-grafana",
+      grafana_admin_user: grafana,
+      grafana_admin_password: GrAfAnA!,
+
+      grafana_properties: "{{grafana_custom_properties}}"
+
+    }
+
+
+```
+
+
 #Installing on Debian / Ubuntu
 
 #Install Stable
@@ -97,4 +137,3 @@ The default configuration specifies a sqlite3 database located at /var/lib/grafa
 #Configuration
 
 The configuration file is located at /etc/grafana/grafana.ini. Go the Configuration page for details on all those options.
-
