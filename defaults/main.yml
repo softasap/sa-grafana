@@ -6,8 +6,8 @@
 
   grafana_setup_properties:
     - {regexp: "^;admin_user =(.*)", line: "admin_user={{grafana_admin_user}}"}
-    - {regexp: "^;admin_password =(.*)", line:"admin_user={{grafana_admin_password}}"}  # Secure redis with pass
+    - {regexp: "^;admin_password =(.*)", line: "admin_user={{grafana_admin_password}}"}  # Secure redis with pass
 
 #  grafana_properties:
 #    - {regexp: "^;admin_user =(.*)", line: "admin_user={{grafana_admin_user}}"}
-#   - {regexp: "^requirepass *", line:"requirepass YOUR_SECURE_PASS"}  # Secure redis with pass
+#   - {regexp: "^requirepass *", line: "requirepass YOUR_SECURE_PASS"}  # Secure redis with pass
