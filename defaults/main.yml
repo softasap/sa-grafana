@@ -4,6 +4,14 @@
   grafana_admin_user: grafana
   grafana_admin_password: GrAfAnA!
 
+
+  option_grafana_tools: true
+  grafana_tools_dir: /opt/grafana_tools
+
+  grafana_organization: COMPANY
+  grafana_api_key: SPECIFY
+  grafana_endpoint: http://localhost:3000
+
   grafana_setup_properties:
     - {regexp: "^;admin_user =(.*)", line: "admin_user={{grafana_admin_user}}"}
     - {regexp: "^;admin_password =(.*)", line: "admin_password={{grafana_admin_password}}"}  # Secure grafana with pass

@@ -1,0 +1,21 @@
+---
+  - name: Grafana | Install jq dependency
+    apt: pkg=jq state=installed
+    become: yes
+    tags:
+      - grafana
+
+  - name: Grafana | Tools dir
+    file: path="{{grafana_tools_dir}}" state="directory"
+    become: yes
+    tags:
+      - grafana
+
+  - name: Grafana | Template tools
+    template: src="{{role_dir}}/templates/grafana_tools/{{item}}.j2" dest="{{grafana_tools_dir}}/{{item}}" owner=root group=root mode="u=rwx,g=rx,o="
+    with_items:
+      - export
+      - import
+    become: yes
+    tags:
+      - grafana
