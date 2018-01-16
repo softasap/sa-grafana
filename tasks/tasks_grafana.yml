@@ -12,7 +12,7 @@
       - grafana
 
   - name: Grafana | Add Debian apt repository
-    apt_repository: repo="deb https://packagecloud.io/grafana/stable/debian/ wheezy main" state=present update_cache=yes
+    apt_repository: repo="deb https://packagecloud.io/grafana/stable/debian/ jessie main" state=present update_cache=yes
     become: yes
     tags:
       - grafana
