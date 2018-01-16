@@ -1,5 +1,5 @@
 sa-grafana
-##########
+==========
 
 
 [![Build Status](https://travis-ci.org/softasap/sa-grafana.svg?branch=master)](https://travis-ci.org/softasap/sa-grafana)
@@ -15,7 +15,8 @@ Simple:
 - {
     role: "sa-grafana",
     grafana_admin_user: grafana,
-    grafana_admin_password: GrAfAnA!
+    grafana_admin_password: GrAfAnA!,
+    option_grafana_tools: true
 
   }
 
@@ -37,6 +38,10 @@ roles:
       role: "sa-grafana",
       grafana_admin_user: grafana,
       grafana_admin_password: GrAfAnA!,
+
+      option_grafana_tools: true
+      grafana_tools_dir: /opt/grafana_tools,
+
 
       grafana_properties: "{{grafana_custom_properties}}"
 
