@@ -1,6 +1,6 @@
 ---
   - name: Grafana | Install python-pycurl
-    apt: pkg=python-pycurl state=installed
+    apt: pkg=python-pycurl state=present
     become: yes
     tags:
       - grafana
