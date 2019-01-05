@@ -1,39 +1,59 @@
 ---
   - name: Grafana | Install python-pycurl
-    apt: pkg=python-pycurl state=installed
+    apt: pkg=apt-transport-https state=present
+    retries: 3
+    register: result
+    until: result is not failed
     become: yes
     tags:
       - grafana
 
   - name: Grafana | Add GPG key to apt keyring
-    apt_key: url=https://packagecloud.io/gpg.key  state=present
+    apt_key: url=https://packages.grafana.com/gpg.key  state=present
+    retries: 3
+    register: result
+    until: result is not failed
     become: yes
     tags:
       - grafana
 
   - name: Grafana | Add Debian apt repository
-    apt_repository: repo="deb https://packagecloud.io/grafana/stable/debian/ jessie main" state=present update_cache=yes
+    apt_repository: repo="deb https://packages.grafana.com/oss/deb stable main" state=present update_cache=yes
+    retries: 3
+    register: result
+    until: result is not failed
     become: yes
     tags:
       - grafana
 
   - name: Grafana | Install
-    apt: update-cache=yes pkg=grafana state=latest
+    apt: update-cache=yes pkg=grafana state=present
+    retries: 3
+    register: result
+    until: result is not failed
     become: yes
     tags:
       - grafana
 
   - name: Grafana | Patch basic settings /etc/grafana/grafana.ini
-    lineinfile: dest=/etc/grafana/grafana.ini  regexp="{{item.regexp}}" line="{{item.line}}" insertafter="{{item.insertafter | default(omit)}}"
-    with_items: "{{grafana_setup_properties | default([])}}"
+    lineinfile:
+      dest: /etc/grafana/grafana.ini
+      regexp: "{{ item.regexp }}"
+      line: "{{ item.line }}"
+      insertafter: "{{ item.insertafter | default(omit) }}"
+    with_items: "{{ grafana_setup_properties | default([]) }}"
     notify: restart grafana
     become: yes
     tags:
      - grafana
 
   - name: Grafana | Patch сustom settings /etc/grafana/grafana.ini
-    lineinfile: dest=/etc/grafana/grafana.ini  regexp="{{item.regexp}}" line="{{item.line}}" insertafter="{{item.insertafter | default(omit)}}"
-    with_items: "{{grafana_properties | default([])}}"
+    lineinfile:
+      dest: /etc/grafana/grafana.ini
+      regexp: "{{ item.regexp }}"
+      line: "{{ item.line }}"
+      insertafter: "{{ item.insertafter | default(omit) }}"
+    with_items: "{{ grafana_properties | default([]) }}"
     notify: restart grafana
     become: yes
     tags:

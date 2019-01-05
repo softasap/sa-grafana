@@ -1,6 +1,6 @@
 ---
 # tasks file for sa-grafana
-  - include: tasks_grafana.yml
+  - include_tasks: tasks_grafana.yml
 
-  - include: tasks_grafana.yml
+  - include_tasks: tasks_grafana.yml
     when: option_grafana_tools
