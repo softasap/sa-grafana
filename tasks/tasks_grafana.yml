@@ -1,6 +1,6 @@
 ---
   - name: Grafana | Install python-pycurl
-    apt: pkg=["python-pycurl","apt-transport-https"] state=present
+    apt: pkg=apt-transport-https state=present
     retries: 3
     register: result
     until: result is not failed
