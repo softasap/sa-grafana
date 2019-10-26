@@ -43,9 +43,9 @@
       yum_repository:
         name: grafana
         description: Grafana upstream yum repo
-        baseurl: "https://packagecloud.io/grafana/stable/el/$releasever/$basearch"
+        baseurl: "https://packages.grafana.com/oss/rpm"
         gpgcheck: yes
-        gpgkey: "https://grafanarel.s3.amazonaws.com/RPM-GPG-KEY-grafana"
+        gpgkey: "https://packages.grafana.com/gpg.key"
       retries: 3
       register: result
       until: result is not failed
@@ -55,7 +55,7 @@
 
     - name: Enable Import RPM key
       rpm_key:
-        key: "https://grafanarel.s3.amazonaws.com/RPM-GPG-KEY-grafana"
+        key: "https://packages.grafana.com/gpg.key"
         state: present
       retries: 3
       register: result
