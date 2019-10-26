@@ -1,39 +1,81 @@
 ---
-  - name: Grafana | Install python-pycurl
-    apt: pkg=apt-transport-https state=present
-    retries: 3
-    register: result
-    until: result is not failed
-    become: yes
-    tags:
-      - grafana
+  - block:
+    - name: Grafana | Install python-pycurl
+      apt: pkg=apt-transport-https state=present
+      retries: 3
+      register: result
+      until: result is not failed
+      become: yes
+      tags:
+        - grafana
 
-  - name: Grafana | Add GPG key to apt keyring
-    apt_key: url=https://packages.grafana.com/gpg.key  state=present
-    retries: 3
-    register: result
-    until: result is not failed
-    become: yes
-    tags:
-      - grafana
+    - name: Grafana | Add GPG key to apt keyring
+      apt_key: url=https://packages.grafana.com/gpg.key  state=present
+      retries: 3
+      register: result
+      until: result is not failed
+      become: yes
+      tags:
+        - grafana
 
-  - name: Grafana | Add Debian apt repository
-    apt_repository: repo="deb https://packages.grafana.com/oss/deb stable main" state=present update_cache=yes
-    retries: 3
-    register: result
-    until: result is not failed
-    become: yes
-    tags:
-      - grafana
+    - name: Grafana | Add Debian apt repository
+      apt_repository: repo="deb https://packages.grafana.com/oss/deb stable main" state=present update_cache=yes
+      retries: 3
+      register: result
+      until: result is not failed
+      become: yes
+      tags:
+        - grafana
 
-  - name: Grafana | Install
-    apt: update-cache=yes pkg=grafana state=present
-    retries: 3
-    register: result
-    until: result is not failed
-    become: yes
-    tags:
-      - grafana
+    - name: Grafana | Install
+      apt: update-cache=yes pkg=grafana state=present
+      retries: 3
+      register: result
+      until: result is not failed
+      become: yes
+      tags:
+        - grafana
+    when: ansible_os_family == "Debian"
+
+  - block:
+
+    - name: Grafana | Yum repository
+      yum_repository:
+        name: grafana
+        description: Grafana upstream yum repo
+        baseurl: "https://packages.grafana.com/oss/rpm"
+        gpgcheck: yes
+        gpgkey: "https://packages.grafana.com/gpg.key"
+      retries: 3
+      register: result
+      until: result is not failed
+      become: yes
+      tags:
+        - grafana
+
+    - name: Enable Import RPM key
+      rpm_key:
+        key: "https://packages.grafana.com/gpg.key"
+        state: present
+      retries: 3
+      register: result
+      until: result is not failed
+      become: yes
+      tags:
+        - grafana
+
+    - name: Install packages
+      package:
+        name: grafana
+        state: present
+      retries: 3
+      register: result
+      until: result is not failed
+      become: yes
+      tags:
+        - grafana
+
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
   - name: Grafana | Patch basic settings /etc/grafana/grafana.ini
     lineinfile:
