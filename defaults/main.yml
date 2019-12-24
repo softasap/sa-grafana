@@ -15,6 +15,7 @@
   grafana_setup_properties:
     - {regexp: "^;admin_user =(.*)", line: "admin_user={{grafana_admin_user}}"}
     - {regexp: "^;admin_password =(.*)", line: "admin_password={{grafana_admin_password}}"}  # Secure grafana with pass
+    - {regexp: "^;provisioning =(.*)", line: "provisioning = conf/provisioning"}  #Allow grafana pre-provisioning
 
 #  grafana_properties:
 #    - {regexp: "^;admin_user =(.*)", line: "admin_user={{grafana_admin_user}}"}
