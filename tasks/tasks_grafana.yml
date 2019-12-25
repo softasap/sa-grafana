@@ -3,6 +3,7 @@
     - name: Grafana | Install python-pycurl
       apt: pkg=apt-transport-https state=present
       retries: 3
+      delay: 15
       register: result
       until: result is not failed
       become: yes
@@ -100,7 +101,6 @@
     become: yes
     tags:
      - grafana
-
 
   - name: Grafana | Restart
     action: service name=grafana-server state=restarted enabled=yes
